@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"name": "Clase 1",
+			"path": "Clase 1"
+		},
+		{
+			"name": "Clase 2",
+			"path": "Clase 2"
+		},
+		{
+			"name": "Clase 1 Ejercicios",
+			"path": "Clase 1 Ejercicios"
+		},
+		{
+			"name": "Clase 2 Ejercicios",
+			"path": "Clase 2 Ejercicios"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Clase 2 Ejercicios"
+	}
+}

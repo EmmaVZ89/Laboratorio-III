@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./persona.js"></script>
+    <script src="./empleado.js"></script>
+    <script src="./fabrica.js"></script>
+    <script src="./main.js" defer></script>
+    <title>Ejercicio 3</title>
+  </head>
+  <body>
+    <h1>Alta Empleados</h1>
+    <input id="txtLegajo" name="legajo" type="number" placeholder="Legajo" />
+    <br /><br />
+    <input id="txtNombre" name="nombre" type="text" placeholder="Nombre" />
+    <br /><br />
+    <input
+      id="txtApellido"
+      name="apellido"
+      type="text"
+      placeholder="Apellido"
+    />
+    <br /><br />
+    <input id="txtDni" name="dni" type="number" placeholder="DNI" />
+    <br /><br />
+    <input id="txtSueldo" name="sueldo" type="number" placeholder="Sueldo" />
+    <br /><br />
+    <input
+      id="rdoMasculino"
+      name="sexo"
+      type="radio"
+      value="m"
+      checked
+    />Masculino
+    <input id="rdoFemenino" name="sexo" type="radio" value="f" />Femenino
+    <br /><br />
+    <input id="btnAgregar" type="button" value="Agregar Empleado" />
+    <br /><br />
+    <div id="fabrica"></div>
+  </body>
+</html>
