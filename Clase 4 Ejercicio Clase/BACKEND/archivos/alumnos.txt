@@ -1,0 +1,4 @@
+{"legajo":1,"nombre":"Emma","apellido":"Watson"},
+{"legajo":2,"nombre":"Soledad","apellido":"Quiroz"},
+{"legajo":4,"nombre":"German","apellido":"Rodriguez"},
+{"legajo":7,"nombre":"Lucas","apellido":"Alvarez"},
