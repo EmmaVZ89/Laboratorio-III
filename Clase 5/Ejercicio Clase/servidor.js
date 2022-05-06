@@ -1,11 +1,10 @@
-"use strict";
-const express = require('express');
-const app = express();
-const path = require('path');
+var express = require('express');
+var app = express();
+var path = require('path');
 app.set('puerto', 9876);
 // donde cargar los archivos estaticos (css, scripts, etc)
 app.use(express.static('./public'));
-app.get('/', (request, response) => {
+app.get('/', function (request, response) {
     // fs.readFile("./index.html", "UTF-8", (err:any, archivo:any)=>{
     //     if(err) throw("Error al intentar leer el archivo.");
     //     response.send(archivo);
@@ -13,44 +12,44 @@ app.get('/', (request, response) => {
     response.sendFile(path.resolve(__dirname, 'index.html'));
 });
 //AGREGO FILE SYSTEM
-const fs = require('fs');
+var fs = require('fs');
 //AGREGO JSON
 app.use(express.json());
 //INDICO RUTA HACIA EL ARCHIVO
-const path_archivo = "./BACKEND/archivos/alumnos.txt";
+var path_archivo = "./BACKEND/archivos/alumnos.txt";
 //AGREGO MULTER
-const multer = require('multer');
+var multer = require('multer');
 //AGREGO MIME-TYPES
-const mime = require('mime-types');
+var mime = require('mime-types');
 //AGREGO STORAGE
-const storage = multer.diskStorage({
-    destination: "public/fotos/",
+var storage = multer.diskStorage({
+    destination: "public/fotos/"
 });
-const upload = multer({
+var upload = multer({
     storage: storage
 });
 //CREO LAS RUTAS PARA EL CRUD
 //LISTAR
-app.get('/alumnos', (request, response) => {
-    fs.readFile(path_archivo, "UTF-8", (err, archivo) => {
+app.get('/alumnos', function (request, response) {
+    fs.readFile(path_archivo, "UTF-8", function (err, archivo) {
         if (err)
             throw ("Error al intentar leer el archivo.");
         console.log("Archivo leído.");
-        let alumnos_array = archivo.split(',\r\n');
+        var alumnos_array = archivo.split(',\r\n');
         response.send(JSON.stringify(alumnos_array));
     });
 });
 //AGREGAR
-app.post('/alumnos', upload.single("foto"), (request, response) => {
-    let file = request.file;
-    let extension = mime.extension(file.mimetype);
-    let alumno = JSON.parse(request.body.alumno);
-    let path = file.destination + alumno.legajo + "." + extension;
+app.post('/alumnos', upload.single("foto"), function (request, response) {
+    var file = request.file;
+    var extension = mime.extension(file.mimetype);
+    var alumno = JSON.parse(request.body.alumno);
+    var path = file.destination + alumno.legajo + "." + extension;
     fs.renameSync(file.path, path);
     alumno.foto = path.split("public/")[1];
-    let contenido = JSON.stringify(alumno) + ",\r\n";
+    var contenido = JSON.stringify(alumno) + ",\r\n";
     // agrega texto
-    fs.appendFile(path_archivo, contenido, (err) => {
+    fs.appendFile(path_archivo, contenido, function (err) {
         if (err)
             throw ("Error al intentar agregar en archivo con foto.");
         console.log("Archivo escrito con foto.");
@@ -58,20 +57,20 @@ app.post('/alumnos', upload.single("foto"), (request, response) => {
     });
 });
 //VERIFICAR
-app.post('/alumnos/verificar', (request, response) => {
-    let dato = request.body;
-    fs.readFile(path_archivo, "UTF-8", (err, archivo) => {
+app.post('/alumnos/verificar', function (request, response) {
+    var dato = request.body;
+    fs.readFile(path_archivo, "UTF-8", function (err, archivo) {
         if (err)
             throw ("Error al intentar leer el archivo.");
-        let alumnos_array = archivo.split(",\r\n");
-        let obj_array = [];
-        alumnos_array.forEach((alumno_str) => {
+        var alumnos_array = archivo.split(",\r\n");
+        var obj_array = [];
+        alumnos_array.forEach(function (alumno_str) {
             if (alumno_str != "" && alumno_str != undefined) {
                 obj_array.push(JSON.parse(alumno_str));
             }
         });
-        let alumnoRtn = {};
-        obj_array.forEach((alumno) => {
+        var alumnoRtn = {};
+        obj_array.forEach(function (alumno) {
             if (alumno.legajo == dato.legajo) {
                 alumnoRtn = alumno;
             }
@@ -80,26 +79,26 @@ app.post('/alumnos/verificar', (request, response) => {
     });
 });
 //MODIFICAR
-app.post('/alumnos/modificar', upload.single("foto"), (request, response) => {
-    let file = request.file;
-    let extension = mime.extension(file.mimetype);
-    let alumno_request = JSON.parse(request.body.alumno);
-    let path = file.destination + alumno_request.legajo + "." + extension;
+app.post('/alumnos/modificar', upload.single("foto"), function (request, response) {
+    var file = request.file;
+    var extension = mime.extension(file.mimetype);
+    var alumno_request = JSON.parse(request.body.alumno);
+    var path = file.destination + alumno_request.legajo + "." + extension;
     fs.renameSync(file.path, path);
     alumno_request.foto = path.split("public/")[1];
-    fs.readFile(path_archivo, "UTF-8", (err, archivo) => {
+    fs.readFile(path_archivo, "UTF-8", function (err, archivo) {
         if (err)
             throw ("Error al intentar leer el archivo.");
-        let alumnos_array = archivo.split(",\r\n");
-        let obj_array = [];
-        alumnos_array.forEach((alumno_str) => {
+        var alumnos_array = archivo.split(",\r\n");
+        var obj_array = [];
+        alumnos_array.forEach(function (alumno_str) {
             if (alumno_str != "" && alumno_str != undefined) {
                 obj_array.push(JSON.parse(alumno_str));
             }
         });
-        let alumnoRtn = {};
-        let obj_array_modif = [];
-        obj_array.forEach((alumno) => {
+        var alumnoRtn = {};
+        var obj_array_modif = [];
+        obj_array.forEach(function (alumno) {
             if (alumno.legajo == alumno_request.legajo) {
                 alumno.nombre = alumno_request.nombre;
                 alumno.apellido = alumno_request.apellido;
@@ -108,12 +107,12 @@ app.post('/alumnos/modificar', upload.single("foto"), (request, response) => {
             }
             obj_array_modif.push(alumno);
         });
-        let alumnos_string = "";
-        obj_array_modif.forEach((alumno) => {
+        var alumnos_string = "";
+        obj_array_modif.forEach(function (alumno) {
             alumnos_string += JSON.stringify(alumno) + ",\r\n";
         });
         //escribe texto
-        fs.writeFile(path_archivo, alumnos_string, (err) => {
+        fs.writeFile(path_archivo, alumnos_string, function (err) {
             if (err)
                 throw ("Error al intentar escribir en archivo.");
             console.log("Archivo modificado.");
@@ -122,21 +121,21 @@ app.post('/alumnos/modificar', upload.single("foto"), (request, response) => {
     });
 });
 //ELIMINAR
-app.post('/alumnos/eliminar', (request, response) => {
-    let obj = request.body;
-    fs.readFile(path_archivo, "UTF-8", (err, archivo) => {
+app.post('/alumnos/eliminar', function (request, response) {
+    var obj = request.body;
+    fs.readFile(path_archivo, "UTF-8", function (err, archivo) {
         if (err)
             throw ("Error al intentar leer el archivo.");
-        let alumnos_array = archivo.split(",\r\n");
-        let obj_array = [];
-        alumnos_array.forEach((alumno_str) => {
+        var alumnos_array = archivo.split(",\r\n");
+        var obj_array = [];
+        alumnos_array.forEach(function (alumno_str) {
             if (alumno_str != "" && alumno_str != undefined) {
                 obj_array.push(JSON.parse(alumno_str));
             }
         });
-        let obj_array_eli = [];
-        let path_foto = "public/";
-        obj_array.forEach((alumno) => {
+        var obj_array_eli = [];
+        var path_foto = "public/";
+        obj_array.forEach(function (alumno) {
             if (alumno.legajo != obj.legajo) {
                 //se agregan todos los alumnos, menos el que se quiere eliminar
                 obj_array_eli.push(alumno);
@@ -145,17 +144,17 @@ app.post('/alumnos/eliminar', (request, response) => {
                 path_foto += alumno.foto;
             }
         });
-        let alumnos_string = "";
-        obj_array_eli.forEach((alumno) => {
+        var alumnos_string = "";
+        obj_array_eli.forEach(function (alumno) {
             alumnos_string += JSON.stringify(alumno) + ",\r\n";
         });
         //escribe texto
-        fs.writeFile(path_archivo, alumnos_string, (err) => {
+        fs.writeFile(path_archivo, alumnos_string, function (err) {
             if (err)
                 throw ("Error al intentar escribir en archivo.");
             console.log("Archivo eliminado.");
             if (path_foto != "" && path_foto != undefined) {
-                fs.unlink(path_foto, (err) => {
+                fs.unlink(path_foto, function (err) {
                     if (err)
                         throw err;
                     console.log(path_foto + ' fue borrado.');
@@ -165,7 +164,6 @@ app.post('/alumnos/eliminar', (request, response) => {
         });
     });
 });
-app.listen(app.get('puerto'), () => {
+app.listen(app.get('puerto'), function () {
     console.log('Servidor corriendo sobre puerto:', app.get('puerto'));
 });
-//# sourceMappingURL=servidor.js.map
