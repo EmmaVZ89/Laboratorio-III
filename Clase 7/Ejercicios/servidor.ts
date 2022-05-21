@@ -212,6 +212,7 @@ app.post('/alumnos/eliminar', (request:any, response:any)=>{
             response.send("Alumno eliminado de la bd.");
         });
     });
+
 });
 
 app.listen(app.get('puerto'), ()=>{
