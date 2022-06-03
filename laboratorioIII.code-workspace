@@ -33,9 +33,12 @@
 		},
 		{
 			"path": "Clase 7"
+		},
+		{
+			"path": "Clase 8"
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "Clase 2 Ejercicios"
+		"liveServer.settings.multiRootWorkspaceName": "Clase 8"
 	}
 }
